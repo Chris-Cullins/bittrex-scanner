@@ -50,9 +50,6 @@ var checkForStochDiverge = function(ticker, input, log) {
 
         var isBearish = technicals.bearish(fourtyBearishInput);
 
-        log.info('Is the 40 period trend bearish? - ' + isBearish);
-
-
         var priceDownMins = checkPriceDownMins(input);
 
         var stochSixty = technicals.stoch(high, low, close, 60, 3);
@@ -77,9 +74,9 @@ var checkForStochDiverge = function(ticker, input, log) {
         log.info(' isHigherLowStochFast - ' + isHigherLowStochFast);
 
 
-        log.info('Final Verdict, do we have Stochastic Divergence? - ' + (isBearish && priceDownMins && isHigherLowStochSixty && isHigherLowStochFourty && isHigherLowStochFast));
+        log.info('Final Verdict, do we have Stochastic Divergence? - ' + (isBearish && priceDownMins && (isHigherLowStochSixty || isHigherLowStochFourty || isHigherLowStochFast)));
 
-        if (isBearish && priceDownMins && isHigherLowStochSixty && isHigherLowStochFourty && isHigherLowStochFast) {
+        if (isBearish && priceDownMins && (isHigherLowStochSixty || isHigherLowStochFourty || isHigherLowStochFast)) {
             return true;
         } else {
             return false;
