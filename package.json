@@ -1,8 +1,8 @@
 {
   "name": "bittrex_bot",
-  "version": "1.0.0",
+  "version": "0.0.5",
   "description": "A signal bot for bittrex",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node main.js"
@@ -13,7 +13,6 @@
     "node.bittrex.api": "^0.5.1",
     "nodemailer": "^4.1.0",
     "technicalindicators": "^1.0.20",
-    "textbelt": "0.0.3",
-    "textmagic-rest-client": "0.0.5"
+    "log": ""
   }
 }
