@@ -13,3 +13,5 @@ This is a pet project that I'm creating to scan the [Bittrex](https://bittrex.co
 
 #### Configuration -
 
+1. Get an API KEY and SECRET set from Bittrex (Under Settings on your account)
+2.

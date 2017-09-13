@@ -2,11 +2,12 @@
  * Created by Chris on 9/12/2017.
  */
 var nodemailer = require('nodemailer');
+var config = require('./config.json');
 
 
-const emailFROMAddress = 't.a.notifier@gmail.com';
-const emailTOAddress = '5017228346@vtext.com';
-const emailSUBJECT = 'Indicator Alert';
+const emailFROMAddress = config.emailFromAddress;
+const emailTOAddress = config.emailTOAddress;
+const emailSUBJECT = config.emailSUBJECT;
 
 function wait(ms) {
     var start = new Date().getTime();
