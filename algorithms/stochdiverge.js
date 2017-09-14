@@ -3,6 +3,7 @@
  */
 var technicals = require('../modules/technicals');
 
+var coolDownMap = {};
 
 /**
  * This function loops through an input array and looks for tickers with a 'stoch diverge' pattern, and returns an array of
@@ -12,6 +13,19 @@ var technicals = require('../modules/technicals');
  * @param log
  */
 var checkForStochDiverge = function(ticker, input, log) {
+
+
+    if (coolDownMap[ticker] !== undefined) {
+        var curCount = coolDownMap[ticker].count;
+
+        if (curCount !== undefined && curCount < 4 && curCount > 0) {
+            curCount++;
+            coolDownMap[ticker] = {'count': curCount};
+            return false;
+        } else if (curCount === 4 || curCount === 0) {
+            curCount = 0;
+        }
+    }
 
     if (ticker !== undefined) {
         log.info('Checking for StochDiverge on ticker ' + ticker + '.');
@@ -77,6 +91,8 @@ var checkForStochDiverge = function(ticker, input, log) {
         log.info('Final Verdict, do we have Stochastic Divergence? - ' + (isBearish && priceDownMins && (isHigherLowStochSixty || isHigherLowStochFourty || isHigherLowStochFast)));
 
         if (isBearish && priceDownMins && (isHigherLowStochSixty || isHigherLowStochFourty || isHigherLowStochFast)) {
+
+            coolDownMap[ticker] = {'count': 1};
             return true;
         } else {
             return false;
