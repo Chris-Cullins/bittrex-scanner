@@ -8,6 +8,7 @@ var config = require('./config.json');
 const emailFROMAddress = config.emailFromAddress;
 const emailTOAddress = config.emailTOAddress;
 const emailSUBJECT = config.emailSUBJECT;
+const emailPass = config.emailPassword;
 
 function wait(ms) {
     var start = new Date().getTime();
@@ -22,8 +23,8 @@ var sendMail = function(mailOptions) {
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: 't.a.notifier@gmail.com',
-            pass: 'Soad1234'
+            user: emailFROMAddress,
+            pass: emailPass
         }
     });
 
