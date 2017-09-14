@@ -1,3 +1,5 @@
 api_settings.json
 config.json
 node_modules/*
+*.log
+.idea/*
