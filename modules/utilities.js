@@ -5,10 +5,10 @@ var nodemailer = require('nodemailer');
 var config = require('./config.json');
 
 
-const emailFROMAddress = config.emailFromAddress;
-const emailTOAddress = config.emailTOAddress;
-const emailSUBJECT = config.emailSUBJECT;
-const emailPass = config.emailPassword;
+const emailFROMAddress = config.emailConfig.emailFromAddress;
+const emailTOAddress = config.emailConfig.emailTOAddress;
+const emailSUBJECT = config.emailConfig.emailSUBJECT;
+const emailPass = config.emailConfig.emailPassword;
 
 function wait(ms) {
     var start = new Date().getTime();

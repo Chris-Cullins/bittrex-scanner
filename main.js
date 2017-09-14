@@ -5,6 +5,7 @@ var fs = require('fs');
 var Log = require('log');
 var fetchPriceTest = require('./modules/fetchPrice');
 var utilities = require('./modules/utilities');
+var config = require('./modules/config.json');
 var tripStoch = require('./algorithms/tripstoch');
 var stochDiverge = require('./algorithms/stochdiverge');
 
@@ -26,7 +27,7 @@ fetchPriceTest.getAvaliableMarkets(function(returned) {
 
    setInterval(function() {
         performTests(marketArray);
-   }, 900000);
+   }, config.mainSettings.intervalBetweenScans);
 });
 
 
@@ -59,25 +60,29 @@ var performTests = function(marketArray) {
 
         fetchPriceTest.getCandles(marketArray[index], 'hour', function(data) {
 
-            var hasTripleStoch = tripStoch.checkForTripleStoch(marketArray[index], data, logStoch);
 
+            if (config.algorithmConfig.tripstoch) {
+                var hasTripleStoch = tripStoch.checkForTripleStoch(marketArray[index], data, logStoch);
 
-            if (hasTripleStoch) {
-                var toText = {
-                    ticker: marketArray[index]
-                };
+                if (hasTripleStoch) {
+                    var toText = {
+                        ticker: marketArray[index]
+                    };
 
-                toTextArrayTripStoch.push(toText);
+                    toTextArrayTripStoch.push(toText);
+                }
             }
 
-            var hasStochDiverge = stochDiverge.checkForStochDiverge(marketArray[index], data, logStoch);
+            if (config.algorithmConfig.stochdiverge) {
+                var hasStochDiverge = stochDiverge.checkForStochDiverge(marketArray[index], data, logStoch);
 
-            if (hasStochDiverge) {
-                var toTextDiverge = {
-                    ticker: marketArray[index]
-                };
+                if (hasStochDiverge) {
+                    var toTextDiverge = {
+                        ticker: marketArray[index]
+                    };
 
-                toTextArrayStochDivergence.push(toTextDiverge);
+                    toTextArrayStochDivergence.push(toTextDiverge);
+                }
             }
             index++;
             nextMarket(marketArray, index);

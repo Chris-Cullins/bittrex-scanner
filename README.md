@@ -24,9 +24,18 @@ This is a pet project that I'm creating to scan the [Bittrex](https://bittrex.co
 3. Create a config.json file also in the 'modules' folder like so:
 ```JSON
     {
-      "emailFromAddress": "your_email_address@whatever.com",
-      "emailPassword": "Your_emails_password",
-      "emailTOAddress": "where you want to receive the emails",
-      "emailSUBJECT": "Indicator Alert"
+      "mainSettings": {
+        "intervalBetweenScans": 900000
+      },
+      "emailConfig": {
+        "emailFromAddress": "your_email_address@whatever.com",
+        "emailPassword": "your_emails_password",
+        "emailTOAddress": "where you want to receive the emails",
+        "emailSUBJECT": "Indicator Alert"
+      },
+      "algorithmConfig": {
+        "stochdiverge": true,
+        "tripstoch": true
+      }
     }
 ```
