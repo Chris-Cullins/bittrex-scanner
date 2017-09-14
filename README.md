@@ -15,14 +15,18 @@ This is a pet project that I'm creating to scan the [Bittrex](https://bittrex.co
 
 1. Get an API KEY and SECRET set from Bittrex (Under Settings on your account)
 2. Create file "api_settings.json" in the following format in the 'modules' folder:
+```JSON
     {
       "api_key": "YOUR_API_KEY_GOES_HERE",
       "api_secret": "YOUR_API_SECRET_GOES_HERE"
     }
+```
 3. Create a config.json file also in the 'modules' folder like so:
+```JSON
     {
       "emailFromAddress": "your_email_address@whatever.com",
       "emailPassword": "Your_emails_password",
       "emailTOAddress": "where you want to receive the emails",
       "emailSUBJECT": "Indicator Alert"
     }
+```
