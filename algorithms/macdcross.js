@@ -2,6 +2,7 @@
  * Created by Chris on 9/14/2017.
  */
 var technicals = require('../modules/technicals');
+var config = require('../modules/config.json');
 
 var coolDownMap = {};
 
@@ -41,20 +42,21 @@ var checkForMACDCross = function(ticker, input, log) {
         }
 
 
-        var stochastic = technicals.stoch(high, low, close, 14, 3);
+        var stochastic = technicals.stoch(high, low, close, config.algorithmConfig.macdcross.stochPeriod,
+            config.algorithmConfig.macdcross.stochSignalPeriod);
 
         var inputRSI = {
             values: close,
-            period: 7
+            period: config.algorithmConfig.macdcross.rsiPeriod
         };
 
         var rsi = technicals.rsi(inputRSI);
 
         var macdInput = {
             values: close,
-            fastPeriod: 12,
-            slowPeriod: 26,
-            signalPeriod: 9,
+            fastPeriod: config.algorithmConfig.macdcross.fastPeriod,
+            slowPeriod: config.algorithmConfig.macdcross.slowPeriod,
+            signalPeriod: config.algorithmConfig.macdcross.signalPeriod,
             SimpleMAOscillator: false,
             SimpleMASignal: false
         };

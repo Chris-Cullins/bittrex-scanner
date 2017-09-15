@@ -89,7 +89,7 @@ var performTests = function(marketArray) {
                 }
             }
 
-            if (config.algorithmConfig.macdcross) {
+            if (config.algorithmConfig.macdcross.use) {
                 var hasMACDCross = macdCross.checkForMACDCross(marketArray[index], data, logStoch);
 
                 if (hasMACDCross) {

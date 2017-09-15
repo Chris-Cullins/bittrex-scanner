@@ -37,7 +37,15 @@ This is a pet project that I'm creating to scan the [Bittrex](https://bittrex.co
       "algorithmConfig": {
         "stochdiverge": true,
         "tripstoch": true,
-        "macdcross": true
+        "macdcross": {
+              "use": true,
+              "fastPeriod": 12,
+              "slowPeriod": 26,
+              "signalPeriod": 9,
+              "rsiPeriod": 7,
+              "stochPeriod": 14,
+              "stochSignalPeriod": 3
+            }
       }
     }
 ```
