@@ -26,9 +26,9 @@ fetchPriceTest.getAvaliableMarkets(function(returned) {
         }
     }
 
-   //setInterval(function() {
+   setInterval(function() {
         performTests(marketArray);
-   //}, config.mainSettings.intervalBetweenScans);
+   }, config.mainSettings.intervalBetweenScans);
 });
 
 
