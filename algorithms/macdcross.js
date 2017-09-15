@@ -7,7 +7,7 @@ var config = require('../modules/config.json');
 var coolDownMap = {};
 
 /**
- * This function loops through an input array and looks for tickers with a 'stoch diverge' pattern, and returns an array of
+ * This function loops through an input array and looks for tickers with a 'MACD Power Cross' pattern, and returns an array of
  * tickers where the pattern was found.
  * @param ticker
  * @param input (candles)
@@ -112,13 +112,13 @@ var determineIfWereInAnEntryPoint = function(stochastic, rsi, macddata, log) {
 
     //did the macd just cross the hist and the signal?
     var yesMACDAboveSignal = false;
-    var yesHISTPositive = false;
+    var yesMACDPositive = false;
 
-    if (macddata[macddata.length - 1].histogram > 0) {
-        if (macddata[macddata.length - 2].histogram <= 0 ||
-            macddata[macddata.length - 3].histogram <= 0 ||
-            macddata[macddata.length - 4].histogram <= 0) {
-            yesHISTPositive = true;
+    if (macddata[macddata.length - 1].MACD > 0) {
+        if (macddata[macddata.length - 2].MACD <= 0 ||
+            macddata[macddata.length - 3].MACD <= 0 ||
+            macddata[macddata.length - 4].MACD <= 0) {
+            yesMACDPositive = true;
         }
     }
     if (macddata[macddata.length - 1].MACD > macddata[macddata.length - 1].signal) {
@@ -132,46 +132,12 @@ var determineIfWereInAnEntryPoint = function(stochastic, rsi, macddata, log) {
     log.info('Did the Stochastic just cross 50? - ' + yesStoch);
     log.info('Did the RSI just cross 50? - ' + yesRSI);
     log.info('Did the MACD just cross the signal? - ' + yesMACDAboveSignal);
-    log.info('Was the histogram positive? - ' + yesHISTPositive);
+    log.info('Was the MACD positive? - ' + yesMACDPositive);
 
-    log.info('Final Verdict on MACD Power Cross - ' + (yesStoch && yesRSI &&  yesMACDAboveSignal && yesHISTPositive));
+    log.info('Final Verdict on MACD Power Cross - ' + (yesStoch && yesRSI &&  yesMACDAboveSignal && yesMACDPositive));
 
-    return (yesStoch && yesRSI &&  yesMACDAboveSignal && yesHISTPositive);
+    return (yesStoch && yesRSI &&  yesMACDAboveSignal && yesMACDPositive);
 
-};
-
-/**
- * Finds valleys in an array.
- * @param arr
- * @returns {*}
- */
-function findValleys(arr) {
-    var valley;
-    return arr.reduce(function(valleys, val, i) {
-        if (arr[i+1] < arr[i]) {
-            valley = arr[i+1];
-        } else if ((arr[i+1] > arr[i]) && (typeof valley === 'number')) {
-            valleys.push(valley);
-            valley = undefined;
-        }
-        return valleys;
-    }, []);
-}
-
-/**
- * determines if an array is sorted descending
- */
-Array.prototype.isSorted = function() {
-    return (function(direction) {
-        return this.reduce(function(prev, next, i, arr) {
-            if (direction === undefined)
-                return (direction = prev <= next ? 1 : -1) || true;
-            else
-                return (direction + 1 ?
-                    (arr[i-1] <= next) :
-                    (arr[i-1] >  next));
-        }) ? Number(direction) : false;
-    }).call(this);
 };
 
 exports.checkForMACDCross = checkForMACDCross;
