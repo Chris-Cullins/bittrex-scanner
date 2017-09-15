@@ -37,6 +37,31 @@ var sendMail = function(mailOptions) {
     })
 };
 
+var emailsForGenericAlgorithm = function(toTextArray, algorithmName) {
+    if (toTextArray.length > 0) {
+        var textString = "Tickers with " + algorithmName + ": \n";
+
+        for (var j = 0; j < toTextArray.length; j++) {
+            item = toTextArray.pop();
+            textString = textString + item.ticker + "\n";
+        }
+
+        var splits = textString.match(/[\s\S]{1,139}/g);
+
+        for (var k = 0; k < splits.length; k++) {
+            var mailoptions = {
+                from: emailFROMAddress,
+                to: emailTOAddress,
+                subject: emailSUBJECT,
+                text: splits[k]
+            };
+            wait(1000);
+            sendMail(mailoptions);
+        }
+
+    }
+
+}
 var emailsForTripStoch = function(toTextArrayTripStoch) {
 
     if (toTextArrayTripStoch.length > 0) {
@@ -63,34 +88,8 @@ var emailsForTripStoch = function(toTextArrayTripStoch) {
     }
 };
 
-var emailsForStochDiverge = function(toTextArrayStochDiverge) {
-
-    if (toTextArrayStochDiverge.length > 0) {
-        var textString = "Tickers with Stoch Divergence: \n";
-
-        for (var j = 0; j < toTextArrayStochDiverge.length; j++) {
-            item = toTextArrayStochDiverge.pop();
-            textString = textString + item.ticker + "\n";
-        }
-
-        var splits = textString.match(/[\s\S]{1,139}/g);
-
-        for (var k = 0; k < splits.length; k++) {
-            var mailoptions = {
-                from: emailFROMAddress,
-                to: emailTOAddress,
-                subject: emailSUBJECT,
-                text: splits[k]
-            };
-            wait(1000);
-            sendMail(mailoptions);
-        }
-
-    }
-};
-
 
 exports.sendMail = sendMail;
 exports.wait = wait;
 exports.emailsForTripStoch = emailsForTripStoch;
-exports.emailsForStochDiverge = emailsForStochDiverge;
+exports.emailsForGenericAlgorithm = emailsForGenericAlgorithm;

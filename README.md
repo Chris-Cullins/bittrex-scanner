@@ -9,6 +9,7 @@ This is a pet project that I'm creating to scan the [Bittrex](https://bittrex.co
 
 1. The Triple Stochastic setup.
 2. Stochastic Divergence.
+3. [MACD Power Cross](http://www.traderplanet.com/articles/view/164694-identify-swing-trades-the-power-crossover-method/)
 
 
 #### Configuration -
@@ -35,7 +36,8 @@ This is a pet project that I'm creating to scan the [Bittrex](https://bittrex.co
       },
       "algorithmConfig": {
         "stochdiverge": true,
-        "tripstoch": true
+        "tripstoch": true,
+        "macdcross": true
       }
     }
 ```

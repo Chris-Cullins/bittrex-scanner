@@ -6,6 +6,7 @@ const SMA = ta.SMA;
 const EMA = ta.EMA;
 const Stochastic = ta.Stochastic;
 var RSI = ta.RSI;
+var MACD = ta.MACD;
 
 
 
@@ -40,8 +41,13 @@ var bearish = function(input) {
     return ta.bearish(input);
 };
 
+var macd = function(macdInput) {
+    return MACD.calculate(macdInput);
+};
+
 exports.sma = sma;
 exports.rsi = rsi;
 exports.stoch = stoch;
 exports.ema = ema;
 exports.bearish = bearish;
+exports.macd = macd;

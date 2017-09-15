@@ -7,6 +7,7 @@ var fetchPriceTest = require('./modules/fetchPrice');
 var utilities = require('./modules/utilities');
 var config = require('./modules/config.json');
 var tripStoch = require('./algorithms/tripstoch');
+var macdCross = require('./algorithms/macdcross');
 var stochDiverge = require('./algorithms/stochdiverge');
 
 
@@ -25,9 +26,9 @@ fetchPriceTest.getAvaliableMarkets(function(returned) {
         }
     }
 
-   setInterval(function() {
+   //setInterval(function() {
         performTests(marketArray);
-   }, config.mainSettings.intervalBetweenScans);
+   //}, config.mainSettings.intervalBetweenScans);
 });
 
 
@@ -37,6 +38,8 @@ var performTests = function(marketArray) {
     var logStoch = new Log('info', fs.createWriteStream('stoch.log'));
 
     var toTextArrayStochDivergence = [];
+    var toTextArrayMACD = [];
+
 
 
     var index = 0;
@@ -46,7 +49,8 @@ var performTests = function(marketArray) {
     function nextMarket(marketArray, index) {
         if (marketArray.length === index) {
             utilities.emailsForTripStoch(toTextArrayTripStoch);
-            utilities.emailsForStochDiverge(toTextArrayStochDivergence);
+            utilities.emailsForGenericAlgorithm(toTextArrayStochDivergence, "Stoch Diverge");
+            utilities.emailsForGenericAlgorithm(toTextArrayMACD, "MACD Cross");
             index = 0;
         } else {
 
@@ -82,6 +86,18 @@ var performTests = function(marketArray) {
                     };
 
                     toTextArrayStochDivergence.push(toTextDiverge);
+                }
+            }
+
+            if (config.algorithmConfig.macdcross) {
+                var hasMACDCross = macdCross.checkForMACDCross(marketArray[index], data, logStoch);
+
+                if (hasMACDCross) {
+                    var toTextMACD = {
+                        ticker: marketArray[index]
+                    };
+
+                    toTextArrayMACD.push(toTextMACD);
                 }
             }
             index++;
